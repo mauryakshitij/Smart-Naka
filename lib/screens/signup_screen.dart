@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_naka/widgets/my_text_button.dart';
 import 'package:smart_naka/widgets/my_text_field.dart';
-import 'models/user_model.dart';
-import 'widgets/my_password_field.dart';
+import '../models/user_model.dart';
+import '../widgets/my_password_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

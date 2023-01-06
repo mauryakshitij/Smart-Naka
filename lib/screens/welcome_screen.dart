@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smart_naka/screens/tabs_screen.dart';
 
 import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+  final bool isLogin;
+
+  const WelcomeScreen(this.isLogin, {super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -21,9 +24,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   void _navigateToHome() async {
     await Future.delayed(const Duration(milliseconds: 1500), () {});
-    if(!mounted) return;
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const AppLoginScreen()));
+    if (!mounted) return;
+    if (!widget.isLogin) {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const AppLoginScreen()));
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const TabsScreen()));
+    }
   }
 
   @override

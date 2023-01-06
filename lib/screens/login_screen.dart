@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smart_naka/signup_screen.dart';
+import 'package:smart_naka/screens/signup_screen.dart';
 import 'package:smart_naka/widgets/my_text_button.dart';
-import 'widgets/my_password_field.dart';
-import 'widgets/my_text_field.dart';
+import '../widgets/my_password_field.dart';
+import '../widgets/my_text_field.dart';
 
 class AppLoginScreen extends StatefulWidget {
   const AppLoginScreen({super.key});
