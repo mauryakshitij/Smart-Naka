@@ -24,7 +24,7 @@ class MyPasswordField extends StatelessWidget {
         child: TextField(
           controller: controller,
           style: GoogleFonts.poppins(
-            color: Colors.white,
+            color: isDarkMode ? Colors.white : Colors.black,
             fontSize: 15,
           ),
           obscureText: isPasswordVisible,

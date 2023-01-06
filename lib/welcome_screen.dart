@@ -53,7 +53,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     children: [
                       const Spacer(),
                       Text(
-                        "Clueless",
+                        "Smart",
                         textAlign: TextAlign.left,
                         style: GoogleFonts.poppins(
                             fontSize: 32,
@@ -63,7 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 : const Color(0xFF213B7E)),
                       ),
                       Text(
-                        "Community",
+                        "Naka",
                         textAlign: TextAlign.left,
                         style: GoogleFonts.poppins(
                           fontSize: 32,
