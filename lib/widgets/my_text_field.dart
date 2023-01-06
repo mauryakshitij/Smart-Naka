@@ -9,7 +9,7 @@ class MyTextField extends StatelessWidget {
     required this.inputType,
     required this.controller,
     this.errorText,
-    this.obscureText
+    this.obscureText,
   }) : super(key: key);
   final String labelText;
   final TextEditingController controller;

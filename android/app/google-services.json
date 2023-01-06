@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "685131697678",
+    "project_id": "smart-naka-bacc0",
+    "storage_bucket": "smart-naka-bacc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685131697678:android:ebb5fee88acb28b8aff65f",
+        "android_client_info": {
+          "package_name": "com.example.smart_naka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685131697678-oaqhnc8cgggkp1elvm1842c5hn61p29f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnRvOs9FAWf8Yg3nRHw4tDdONxQkmoCBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685131697678-oaqhnc8cgggkp1elvm1842c5hn61p29f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
