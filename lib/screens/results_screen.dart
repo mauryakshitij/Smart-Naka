@@ -29,6 +29,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
         .collection('users')
         .doc(currentEmail)
         .collection('starred');
+    CollectionReference reported = FirebaseFirestore.instance
+        .collection('reported');
     return Scaffold(
       backgroundColor: Colors.white70,
       appBar: AppBar(
@@ -224,7 +226,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                         ElevatedButton(
-                            onPressed: () {}, child: const Text('Report'))
+                          onPressed: () {
+                            reported
+                                .doc(snapshot.data!.right.regNumber)
+                                .set(snapshot.data!.right.toJsonWithTime())
+                                .then((value) {
+                                  print('Reported found');
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(content: Text("The vehicle is reported to be found.")));
+                                })
+                                .catchError((error) => print("Failed to report"));
+                          },
+                          child: const Text('Report'),
+                        ),
                       ],
                     ),
                   ),

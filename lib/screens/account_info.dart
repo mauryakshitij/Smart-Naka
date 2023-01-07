@@ -27,7 +27,7 @@ class _AccountInfoState extends State<AccountInfo> {
             onPressed: (){
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back,color: Colors.black,)
+            icon: const Icon(Icons.arrow_back,color: Colors.black,)
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -63,7 +63,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     Expanded(
                       child: SingleChildScrollView(
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                           child: Column(
                             children: [
                               Text(
@@ -73,7 +73,7 @@ class _AccountInfoState extends State<AccountInfo> {
                                     fontSize: 20
                                 ),
                               ),
-                              SizedBox(height: 5,),
+                              const SizedBox(height: 5,),
                               Text(
                                 snapshot.data['email']!,
                                 style: const TextStyle(
@@ -81,7 +81,7 @@ class _AccountInfoState extends State<AccountInfo> {
                                     fontSize: 20
                                 ),
                               ),
-                              SizedBox(height: 5,),
+                              const SizedBox(height: 5,),
                               Text(
                                 snapshot.data['employeeId']!,
                                 style: const TextStyle(
@@ -105,7 +105,7 @@ class _AccountInfoState extends State<AccountInfo> {
                         },
                         child: const Text('Log Out')
                     ),
-                    Expanded(child: Text(''),)
+                    const Expanded(child: Text(''),)
                   ],
                 ),
               );

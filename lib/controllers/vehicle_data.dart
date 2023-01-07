@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_naka/models/vehicle_model.dart';
 
@@ -9,6 +10,9 @@ Future<ReturnPair> fetchVehicle(String regNumber) async {
   final response = await http.get(Uri.parse(url));
   var body = json.decode(response.body);
   late ReturnPair returnObject;
+  if(await checkReported(regNumber)){
+    return ReturnPair(false, Vehicle(type: "", stolenDate: "", vinNumber: "", regNumber: "", engineNumber: "", make: "", model: "", year: "", color: "", province: "", lastKnownLocation: "", description: "", caseNumber: "", policeStation: ""));
+  }
 
   if(body['result']=="Stolen") {
     Vehicle vehicle = Vehicle(
@@ -43,4 +47,14 @@ class ReturnPair {
 
   @override
   String toString() => 'Pair[$left, $right]';
+}
+
+Future<bool> checkReported(String regNumber) async {
+  var snapshot = await FirebaseFirestore.instance.collection('reported').get();
+  for(var doc in snapshot.docs){
+    if(doc.id == regNumber){
+      return true;
+    }
+  }
+  return false;
 }
