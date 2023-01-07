@@ -15,15 +15,16 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _vehicleController = TextEditingController();
 
   Future<void> submit() async {
-    ReturnPair vehicleInfo = await fetchVehicle(_vehicleController.text.trim());
-    if (vehicleInfo.left == false) {
-      if(!mounted) return;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("No vehicle found")));
-    } else {
-      Vehicle vehicle = vehicleInfo.right;
-      print(vehicle.toJson());
-    }
+    // ReturnPair vehicleInfo = await fetchVehicle(_vehicleController.text.trim());
+    // if (vehicleInfo.left == false) {
+    //   if(!mounted) return;
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(const SnackBar(content: Text("No vehicle found")));
+    // } else {
+    //   Vehicle vehicle = vehicleInfo.right;
+    //   print(vehicle.toJson());
+    // }
+    // Navigator.push(context, MaterialPageRoute(builder: (context)=>ResultsScreen(regNumber: _vehicleController.text)));
   }
 
   @override
@@ -47,6 +48,11 @@ class _SearchPageState extends State<SearchPage> {
               ),
               TextFormField(
                 controller: _vehicleController,
+                onChanged: (value) {
+                  _vehicleController.value = TextEditingValue(
+                      text: value.toUpperCase(),
+                      selection: _vehicleController.selection);
+                },
                 decoration: InputDecoration(
                   hintText: "TN75AA7106",
                   filled: true,
@@ -55,7 +61,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if (value!.length < 8) {
                     return "Enter some valid number";
                   } else {
                     return null;
@@ -65,7 +71,13 @@ class _SearchPageState extends State<SearchPage> {
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsScreen(regNumber: _vehicleController.text)));
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResultsScreen(
+                                    regNumber: _vehicleController.text)))
+                        .then((value) => _vehicleController.clear());
                   }
                 },
                 style: ElevatedButton.styleFrom(
