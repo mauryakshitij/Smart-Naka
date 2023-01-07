@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_naka/screens/account_screen.dart';
 import 'package:smart_naka/screens/history_screen.dart';
 import 'package:smart_naka/screens/login_screen.dart';
 import 'package:smart_naka/screens/search_screen.dart';
 import 'package:smart_naka/screens/starred_screen.dart';
+
+import 'account_info.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -26,6 +27,15 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AccountInfo()),
+              );
+            },
+            icon: Icon(Icons.account_circle_rounded)
+          ),
           title: Text('Smart Naka'),
           centerTitle: true,
           actions: [
