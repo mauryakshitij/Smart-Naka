@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_naka/screens/account_screen.dart';
 import 'package:smart_naka/screens/history_screen.dart';
 import 'package:smart_naka/screens/login_screen.dart';
 import 'package:smart_naka/screens/search_screen.dart';
+import 'package:smart_naka/screens/starred_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -24,12 +26,13 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Smart Naka'),
+          title: Text('Smart Naka'),
+          centerTitle: true,
           actions: [
             IconButton(
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
-                if(!mounted) return;
+                if (!mounted) return;
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const AppLoginScreen()),
@@ -39,7 +42,7 @@ class _TabsScreenState extends State<TabsScreen> {
             )
           ],
         ),
-        body: [SearchPage(),SearchPage(),HistoryScreen()][selectedIndex],
+        body: [SearchPage(), StarredScreen(), HistoryScreen()][selectedIndex],
         bottomNavigationBar: NavigationBar(
           animationDuration: const Duration(seconds: 1),
           backgroundColor: const Color(0xFFFDFDFD),

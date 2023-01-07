@@ -12,11 +12,11 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController _vehicleController = TextEditingController();
-  String _vehicleError = "";
 
   Future<void> submit() async {
     ReturnPair vehicleInfo = await fetchVehicle(_vehicleController.text.trim());
     if (vehicleInfo.left == false) {
+      if(!mounted) return;
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("No vehicle found")));
     } else {
@@ -49,22 +49,21 @@ class _SearchPageState extends State<SearchPage> {
                 decoration: InputDecoration(
                   hintText: "TN75AA7106",
                   filled: true,
-                  border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(8),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                validator: (value){
-                  if(value!.isEmpty){
-                    return "enter some valid number";
-                  }
-                  else{
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter some valid number";
+                  } else {
                     return null;
                   }
                 },
               ),
               ElevatedButton(
-                onPressed: (){
-                  if(formKey.currentState!.validate()){
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
                     submit;
                   }
                 },

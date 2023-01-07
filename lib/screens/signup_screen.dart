@@ -19,24 +19,21 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmController = TextEditingController();
+  final TextEditingController _employeeController = TextEditingController();
   bool isPasswordVisible = true;
-  bool isChecked = false;
 
   String _nameError = "";
   String _emailError = "";
+  String _employeeError = "";
   String _passwordError = "";
   String _confirmError = "";
 
   Future<void> submit() async {
-    if (!isChecked) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Please agree to Terms and Conditions")));
-      return;
-    }
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
     String confirm = _confirmController.text;
+    String employeeID = _employeeController.text;
 
     if (name.isEmpty) {
       setState(() {
@@ -65,8 +62,28 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
         _emailError = "";
       });
     }
-    if (password != confirm) {
+    if (employeeID.isEmpty) {
       setState(() {
+        _employeeError = "Employee ID is required.";
+      });
+      return;
+    } else {
+      setState(() {
+        _employeeError = "";
+      });
+    }
+    if (password.isEmpty) {
+      setState(() {
+        _passwordError = "Password can't be empty";
+      });
+    } else if (confirm.isEmpty) {
+      setState(() {
+        _passwordError = "";
+        _confirmError = "Password can't be empty";
+      });
+    } else if (password != confirm) {
+      setState(() {
+        _passwordError = "";
         _confirmError = "Passwords don't match.";
       });
       return;
@@ -78,8 +95,10 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
       User firebaseUser = FirebaseAuth.instance.currentUser!;
       CollectionReference usersCollection =
           FirebaseFirestore.instance.collection("users");
-      UserModel user = UserModel(name: name, email: email);
+      UserModel user =
+          UserModel(name: name, email: email, employeeID: employeeID);
       usersCollection.doc(user.email).set(user.toJson());
+      if (!mounted) return;
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Sign up successful")));
     } on FirebaseAuthException catch (e) {
@@ -111,179 +130,141 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            body: Column(children: [
-              SizedBox(
-                height: height / 20,
-              ),
-              Row(
-                children: [
-                  const Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Smart",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: isDarkMode
-                                ? const Color(0xffF0EEEE)
-                                : const Color(0xFF213B7E)),
-                      ),
-                      Text("Naka",
+            body: SingleChildScrollView(
+              child: Column(children: [
+                SizedBox(
+                  height: height / 20,
+                ),
+                Row(
+                  children: [
+                    const Spacer(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Smart",
                           textAlign: TextAlign.left,
                           style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: isDarkMode
-                                ? const Color(0xffF0EEEE)
-                                : Colors.black,
-                          ))
-                    ],
-                  ),
-                  const Spacer(),
-                ],
-              ),
-              SizedBox(
-                height: height / 25,
-              ),
-              SizedBox(
-                width: width / 1.2,
-                child: MyTextField(
-                  labelText: 'Name',
-                  hintText: 'Enter Name',
-                  inputType: TextInputType.text,
-                  controller: _nameController,
-                  errorText: _nameError,
-                ),
-              ),
-              SizedBox(
-                width: width / 1.2,
-                child: MyTextField(
-                  labelText: 'Email',
-                  hintText: 'Enter Email Address',
-                  inputType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  errorText: _emailError,
-                ),
-              ),
-              SizedBox(
-                width: width / 1.2,
-                child: MyPasswordField(
-                  controller: _passwordController,
-                  isPasswordVisible: isPasswordVisible,
-                  errorText: _passwordError,
-                  onTap: () {
-                    setState(() {
-                      isPasswordVisible = !isPasswordVisible;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(
-                width: width / 1.2,
-                child: MyTextField(
-                  labelText: 'Confirm Password',
-                  hintText: 'Enter Password',
-                  inputType: TextInputType.visiblePassword,
-                  controller: _confirmController,
-                  errorText: _confirmError,
-                  obscureText: true,
-                ),
-              ),
-              SizedBox(
-                height: height / 40,
-              ),
-              SizedBox(
-                width: width / 1.1,
-                child: Row(
-                  children: [
-                    Checkbox(
-                      checkColor: Colors.white,
-                      activeColor: Colors.black,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: isDarkMode
+                                  ? const Color(0xffF0EEEE)
+                                  : const Color(0xFF213B7E)),
+                        ),
+                        Text("Naka",
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: isDarkMode
+                                  ? const Color(0xffF0EEEE)
+                                  : Colors.black,
+                            ))
+                      ],
                     ),
-                    Text(
-                      'I agree to ',
-                      style: GoogleFonts.poppins(
-                          color: Colors.grey,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'Terms and Conditions ',
-                        style: GoogleFonts.poppins(
-                            fontSize: 10, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    Text(
-                      'and ',
-                      style: GoogleFonts.poppins(
-                          color: Colors.grey,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'Privacy Policy',
-                        style: GoogleFonts.poppins(
-                            fontSize: 10, fontWeight: FontWeight.w500),
-                      ),
-                    ),
+                    const Spacer(),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: height / 40,
-              ),
-              SizedBox(
-                width: width / 1.2,
-                child: MyTextButton(
-                  onTap: submit,
-                  buttonName: 'Sign up',
-                  bgColor: const Color(0xFF136DD6),
-                  textColor: Colors.white,
+                SizedBox(
+                  height: height / 25,
                 ),
-              ),
-              SizedBox(
-                height: height / 30,
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account? ",
-                      style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey[600]),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        "Login",
+                SizedBox(
+                  width: width / 1.2,
+                  child: MyTextField(
+                    labelText: 'Name',
+                    hintText: 'Enter Name',
+                    inputType: TextInputType.text,
+                    controller: _nameController,
+                    errorText: _nameError,
+                  ),
+                ),
+                SizedBox(
+                  width: width / 1.2,
+                  child: MyTextField(
+                    labelText: 'Email',
+                    hintText: 'Enter Email Address',
+                    inputType: TextInputType.emailAddress,
+                    controller: _emailController,
+                    errorText: _emailError,
+                  ),
+                ),
+                SizedBox(
+                  width: width / 1.2,
+                  child: MyTextField(
+                    labelText: 'Employee ID',
+                    hintText: 'Enter Employee ID',
+                    inputType: TextInputType.number,
+                    controller: _employeeController,
+                    errorText: _employeeError,
+                  ),
+                ),
+                SizedBox(
+                  width: width / 1.2,
+                  child: MyPasswordField(
+                    controller: _passwordController,
+                    isPasswordVisible: isPasswordVisible,
+                    errorText: _passwordError,
+                    onTap: () {
+                      setState(() {
+                        isPasswordVisible = !isPasswordVisible;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: width / 1.2,
+                  child: MyTextField(
+                    labelText: 'Confirm Password',
+                    hintText: 'Enter Password',
+                    inputType: TextInputType.visiblePassword,
+                    controller: _confirmController,
+                    errorText: _confirmError,
+                    obscureText: true,
+                  ),
+                ),
+                SizedBox(
+                  height: height / 40,
+                ),
+                SizedBox(
+                  width: width / 1.2,
+                  child: MyTextButton(
+                    onTap: submit,
+                    buttonName: 'Sign up',
+                    bgColor: const Color(0xFF136DD6),
+                    textColor: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: height / 30,
+                ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account? ",
                         style: GoogleFonts.poppins(
                             fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF2845DB)),
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey[600]),
                       ),
-                    ),
-                  ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          "Login",
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF2845DB)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ]),
+              ]),
+            ),
           ),
         ));
   }
