@@ -99,9 +99,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
           }
           history
               .doc(snapshot.data!.right.regNumber)
-              .set(snapshot.data!.right.toJson())
+              .set(snapshot.data!.right.toJsonWithTime())
               .then((value) => print("history Added"))
               .catchError((error) => print("Failed to add history"));
+
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(

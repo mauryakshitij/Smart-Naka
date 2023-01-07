@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Vehicle {
   final String type;
   final String stolenDate;
@@ -31,7 +33,7 @@ class Vehicle {
     required this.policeStation,
   });
 
-  Map<String, String> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "type": type,
       "stolenDate": stolenDate,
@@ -47,6 +49,25 @@ class Vehicle {
       "description":description,
       "caseNumber":caseNumber,
       "policeStation":policeStation,
+    };
+  }
+  Map<String, dynamic> toJsonWithTime() {
+    return {
+      "type": type,
+      "stolenDate": stolenDate,
+      "vinNumber":vinNumber,
+      "regNumber":regNumber,
+      "engineNumber":engineNumber,
+      "make":make,
+      "model":model,
+      "year":year,
+      "color":color,
+      "province":province,
+      "lastKnownLocation":lastKnownLocation,
+      "description":description,
+      "caseNumber":caseNumber,
+      "policeStation":policeStation,
+      "searchTime":Timestamp.now()
     };
   }
 
