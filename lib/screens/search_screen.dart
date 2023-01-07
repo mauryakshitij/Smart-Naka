@@ -14,12 +14,6 @@ class _SearchPageState extends State<SearchPage> {
   String _vehicleError = "";
 
   Future<void> submit() async {
-    if (_vehicleController.text == "") {
-      setState(() {
-        _vehicleError = 'Please enter vehicle number';
-      });
-      return;
-    }
     ReturnPair vehicleInfo = await fetchVehicle(_vehicleController.text.trim());
     if (vehicleInfo.left == false) {
       ScaffoldMessenger.of(context)
@@ -53,9 +47,8 @@ class _SearchPageState extends State<SearchPage> {
                 hintText: "TN75AA7106",
                 errorText: _vehicleError,
                 filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
             ElevatedButton(
