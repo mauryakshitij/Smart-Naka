@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_naka/screens/history_screen.dart';
 import 'package:smart_naka/screens/login_screen.dart';
 import 'package:smart_naka/screens/search_screen.dart';
 
@@ -38,7 +39,7 @@ class _TabsScreenState extends State<TabsScreen> {
             )
           ],
         ),
-        body: [SearchPage()][selectedIndex],
+        body: [SearchPage(),SearchPage(),HistoryScreen()][selectedIndex],
         bottomNavigationBar: NavigationBar(
           animationDuration: const Duration(seconds: 1),
           backgroundColor: const Color(0xFFFDFDFD),

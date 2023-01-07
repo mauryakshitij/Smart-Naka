@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:smart_naka/Models/vehicle_model.dart';
+import 'package:smart_naka/models/vehicle_model.dart';
 
 Future<ReturnPair> fetchVehicle(String regNumber) async {
   var url =
       'https://stolenvehicles.co.za/api/vehicles_v2/a95dbd2f8ea23696724b2d22327bdcb6d97e5141/$regNumber';
 
   final response = await http.get(Uri.parse(url));
-  final body = jsonDecode(response.body);
+  var body = json.decode(response.body);
   late ReturnPair returnObject;
 
   if(body['result']=="Stolen") {

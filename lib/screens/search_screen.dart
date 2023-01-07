@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smart_naka/Controllers/vehicle_data.dart';
+import '../models/vehicle_model.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -8,6 +10,20 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final TextEditingController _vehicleController = TextEditingController();
+  String _vehicleError = "";
+
+  Future<void> submit() async {
+    ReturnPair vehicleInfo = await fetchVehicle(_vehicleController.text.trim());
+    if (vehicleInfo.left == false) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("No vehicle found")));
+    } else {
+      Vehicle vehicle = vehicleInfo.right;
+      print(vehicle.toJson());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -26,14 +42,16 @@ class _SearchPageState extends State<SearchPage> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
             ),
             TextFormField(
+              controller: _vehicleController,
               decoration: InputDecoration(
                 hintText: "TN75AA7106",
+                errorText: _vehicleError,
                 filled: true,
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
-            GestureDetector(
+            InkWell(
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 13),
@@ -48,7 +66,7 @@ class _SearchPageState extends State<SearchPage> {
                       fontWeight: FontWeight.w400),
                 )),
               ),
-              onTap: () {},
+              onTap: submit,
             )
           ],
         ),
