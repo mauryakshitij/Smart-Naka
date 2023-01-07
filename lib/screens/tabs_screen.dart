@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_naka/screens/login_screen.dart';
 import 'package:smart_naka/screens/search_screen.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -24,7 +26,14 @@ class _TabsScreenState extends State<TabsScreen> {
           title: const Text('Smart Naka'),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                if(!mounted) return;
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const AppLoginScreen()),
+                    (Route route) => false);
+              },
               icon: const Icon(Icons.logout_rounded),
             )
           ],

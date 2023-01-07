@@ -72,6 +72,7 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
       return;
     }
     try {
+      FocusManager.instance.primaryFocus?.unfocus();
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       User firebaseUser = FirebaseAuth.instance.currentUser!;
@@ -79,6 +80,8 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
           FirebaseFirestore.instance.collection("users");
       UserModel user = UserModel(name: name, email: email);
       usersCollection.doc(user.email).set(user.toJson());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Sign up successful")));
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
         setState(() {
@@ -193,18 +196,6 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
                 height: height / 40,
               ),
               SizedBox(
-                width: width / 1.2,
-                child: MyTextButton(
-                  onTap: submit,
-                  buttonName: 'Sign up',
-                  bgColor: const Color(0xFF136DD6),
-                  textColor: Colors.white,
-                ),
-              ),
-              SizedBox(
-                height: height / 30,
-              ),
-              SizedBox(
                 width: width / 1.1,
                 child: Row(
                   children: [
@@ -249,6 +240,18 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              SizedBox(
+                height: height / 40,
+              ),
+              SizedBox(
+                width: width / 1.2,
+                child: MyTextButton(
+                  onTap: submit,
+                  buttonName: 'Sign up',
+                  bgColor: const Color(0xFF136DD6),
+                  textColor: Colors.white,
                 ),
               ),
               SizedBox(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_naka/screens/signup_screen.dart';
+import 'package:smart_naka/screens/tabs_screen.dart';
 import 'package:smart_naka/widgets/my_text_button.dart';
 import '../widgets/my_password_field.dart';
 import '../widgets/my_text_field.dart';
@@ -24,7 +25,6 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
   String _passwordError = "";
 
   Future<void> submit() async {
-
     String email = _emailController.text;
     String password = _passwordController.text;
     if (email.isEmpty) {
@@ -32,8 +32,7 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
         _emailError = "Email required.";
       });
       return;
-    }
-    else{
+    } else {
       setState(() {
         _emailError = "";
       });
@@ -46,9 +45,13 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
     }
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-          email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password);
+      if(!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const TabsScreen()),
+          (Route route) => false);
     } on FirebaseAuthException catch (e) {
+      print(e);
       if (e.code == 'user-not-found' || e.code == 'invalid-email') {
         setState(() {
           _emailError = "Invalid username";
@@ -102,7 +105,9 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
                           style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
-                            color: isDarkMode ? const Color(0xffF0EEEE) : Colors.black,
+                            color: isDarkMode
+                                ? const Color(0xffF0EEEE)
+                                : Colors.black,
                           ))
                     ],
                   ),
@@ -151,14 +156,13 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
                   ),
                 ),
               ),
-
               SizedBox(
                 height: height / 40,
               ),
               SizedBox(
                 width: width / 1.2,
                 child: MyTextButton(
-                  onTap: () {},
+                  onTap: submit,
                   buttonName: 'Login',
                   bgColor: const Color(0xFF136DD6),
                   textColor: Colors.white,
@@ -181,9 +185,9 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>const AppSignUpScreen())
-                        );
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AppSignUpScreen()));
                       },
                       child: Text(
                         "Sign up",
