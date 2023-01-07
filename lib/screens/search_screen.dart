@@ -51,22 +51,23 @@ class _SearchPageState extends State<SearchPage> {
                     OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
-            InkWell(
+            ElevatedButton(
+              onPressed: submit,
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8))),
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 13),
-                decoration: BoxDecoration(
-                    color: Colors.blue, borderRadius: BorderRadius.circular(8)),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: const Center(
                     child: Text(
                   'Search',
                   style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 18,
                       color: Colors.white,
                       fontWeight: FontWeight.w400),
                 )),
               ),
-              onTap: submit,
             )
           ],
         ),
