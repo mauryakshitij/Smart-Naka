@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_naka/Controllers/vehicle_data.dart';
+import 'package:smart_naka/screens/results_screen.dart';
 import '../models/vehicle_model.dart';
 
 class SearchPage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _SearchPageState extends State<SearchPage> {
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    submit;
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsScreen(regNumber: _vehicleController.text)));
                   }
                 },
                 style: ElevatedButton.styleFrom(
