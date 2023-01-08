@@ -54,7 +54,7 @@ class _SearchPageState extends State<SearchPage> {
                       selection: _vehicleController.selection);
                 },
                 decoration: InputDecoration(
-                  hintText: "TN75AA7106",
+                  hintText: "CA529663",
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
