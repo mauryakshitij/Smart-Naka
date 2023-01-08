@@ -46,7 +46,7 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      if(!mounted) return;
+      if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const TabsScreen()),
           (Route route) => false);
@@ -87,6 +87,12 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
               Row(
                 children: [
                   const Spacer(),
+                  Image(
+                      image: const AssetImage("assets/images/police.png"),
+                      width: width / 12),
+                  const SizedBox(
+                    width: 8,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -140,22 +146,22 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
                   },
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: width / 12, vertical: height / 50),
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'Forgot Password?',
-                    style: GoogleFonts.poppins(
-                        color: const Color(0xFF5C5B5B),
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14),
-                  ),
-                ),
-              ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(
+              //       horizontal: width / 12, vertical: height / 50),
+              //   alignment: Alignment.centerRight,
+              //   child: GestureDetector(
+              //     onTap: () {},
+              //     child: Text(
+              //       'Forgot Password?',
+              //       style: GoogleFonts.poppins(
+              //           color: const Color(0xFF5C5B5B),
+              //           decoration: TextDecoration.underline,
+              //           fontWeight: FontWeight.w500,
+              //           fontSize: 14),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: height / 40,
               ),

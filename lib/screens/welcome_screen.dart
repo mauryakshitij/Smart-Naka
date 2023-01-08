@@ -37,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
+    bool isDarkMode = false;
     final width = MediaQuery.of(context).size.width;
     return Theme(
         data: isDarkMode ? ThemeData.dark() : ThemeData.light(),
@@ -49,12 +49,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 children: [
                   const Spacer(),
                   Image(
-                      image: isDarkMode
-                          ? const AssetImage(
-                              "assets/clueless_logo/logo_dark.png")
-                          : const AssetImage(
-                              'assets/clueless_logo/logo_light.png'),
+                      image: const AssetImage("assets/images/police.png"),
                       width: width / 3),
+                  const SizedBox(
+                    width: 12,
+                  ),
                   Center(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

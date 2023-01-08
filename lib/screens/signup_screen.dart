@@ -138,6 +138,12 @@ class _AppSignUpScreenState extends State<AppSignUpScreen> {
                 Row(
                   children: [
                     const Spacer(),
+                    Image(
+                        image: const AssetImage("assets/images/police.png"),
+                        width: width / 12),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
