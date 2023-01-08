@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable/expandable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smart_naka/Controllers/vehicle_data.dart';
 import 'package:smart_naka/models/vehicle_model.dart';
@@ -26,6 +28,80 @@ class _ResultsScreenState extends State<ResultsScreen> {
   void setState(fn) {
     if(mounted) {
       super.setState(fn);
+    }
+  }
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {   
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<List<Placemark>> _getAddressFromLatLng(Position position) async {
+    return await placemarkFromCoordinates(position!.latitude, position!.longitude);
+  }
+
+
+  Future<Position?> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) return null;
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
+  void updateLocation() async {
+    Position? currentPosition = await _getCurrentPosition();
+    List<Placemark> placemarks;
+    if(currentPosition==null){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please give all permission then try again')));
+    }
+    else{
+      placemarks= await _getAddressFromLatLng(currentPosition);
+      var listLocations=[];
+      await FirebaseFirestore.instance.collection("locationhistory").doc(widget.regNumber).get().then((value) => {
+        if(value.exists){
+          listLocations=value['history']
+        }else{
+          
+          FirebaseFirestore.instance.collection("locationhistory").doc(widget.regNumber).set(
+            {
+              'history': []
+            }
+          )
+
+        }
+      });
+      var  _time=DateTime.now();
+      listLocations.add({
+        'location': "${placemarks[1].subLocality}, ${placemarks[1].locality}, ${placemarks[1].administrativeArea}, ${placemarks[1].country}, ${placemarks[1].postalCode}",
+        'time': _time,
+      });
+      FirebaseFirestore.instance.collection("locationhistory").doc(widget.regNumber).update(
+        {
+          'history': listLocations
+        }
+      );
+      print(listLocations);
+      print(placemarks[1]);
     }
   }
   @override
@@ -282,20 +358,30 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            reported
-                                .doc(snapshot.data!.right.regNumber)
-                                .set(snapshot.data!.right.toJsonWithTime())
-                                .then((value) {
-                              print('Reported found');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "The vehicle is reported to be found.")));
-                            }).catchError((error) => print("Failed to report"));
-                          },
-                          child: const Text('Report'),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                reported
+                                    .doc(snapshot.data!.right.regNumber)
+                                    .set(snapshot.data!.right.toJsonWithTime())
+                                    .then((value) {
+                                  print('Reported found');
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "The vehicle is reported to be found.")));
+                                }).catchError((error) => print("Failed to report"));
+                              },
+                              child: const Text('Report'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                updateLocation();
+                              },
+                              child: const Text('Update location'),
+                            )
+                          ],
                         ),
                       ],
                     ),

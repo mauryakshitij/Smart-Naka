@@ -46,6 +46,8 @@ dependencies:
   path_provider: ^2.0.11
   google_nav_bar: ^5.0.6
   widget_circular_animator: ^1.0.0
+  geolocator: ^8.2.0
+  geocoding: ^2.0.4
 
 dev_dependencies:
   flutter_test:
