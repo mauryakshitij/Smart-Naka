@@ -34,14 +34,7 @@ class _StarredScreenState extends State<StarredScreen> {
           for (var i = 0; i < snapshot.data!.docs.length; i++) {
             Map<String, dynamic> data =
                 snapshot.data!.docs[i].data() as Map<String, dynamic>;
-            reported
-                .doc(data['regNumber'])
-                .get()
-                .then((DocumentSnapshot documentSnapshot) {
-              if (!documentSnapshot.exists) {
-                list.add(data);
-              }
-            });
+            list.add(data);
           }
           return ListView.builder(
               itemCount: list.length,
