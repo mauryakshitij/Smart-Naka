@@ -71,7 +71,7 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
+    bool isDarkMode = false;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Theme(
@@ -104,7 +104,7 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
                             fontWeight: FontWeight.w500,
                             color: isDarkMode
                                 ? const Color(0xffF0EEEE)
-                                : const Color(0xFF213B7E)),
+                                : const Color(0xFF00838F)),
                       ),
                       Text("Naka",
                           textAlign: TextAlign.left,
@@ -170,7 +170,7 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
                 child: MyTextButton(
                   onTap: submit,
                   buttonName: 'Login',
-                  bgColor: const Color(0xFF136DD6),
+                  bgColor: const Color(0xFF00838F),
                   textColor: Colors.white,
                 ),
               ),
@@ -200,7 +200,7 @@ class _AppLoginScreenState extends State<AppLoginScreen> {
                         style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: const Color(0xFF2845DB)),
+                            color: const Color(0xFF00838F)),
                       ),
                     ),
                   ],
