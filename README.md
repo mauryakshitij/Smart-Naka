@@ -15,7 +15,16 @@ We have created  a mobile app that allows a constable to quickly and easily chec
 git clone https://github.com/<your username>/Smart-Naka
 cd Smart-Naka
 ```
-3. Finally, run the app:
+3. Add a remote to the upstream repository:
+```
+# Typing the command below should show you only 1 remote named origin with the URL of your forked repository
+git remote -v
+# Adding a remote for the upstream repository
+git remote add upstream https://github.com/mauryakshitij/Smart-Naka
+```
+4. Get [Flutter](https://docs.flutter.dev/get-started/install) and [Firebase CLI](https://firebase.google.com/docs/cli?authuser=0&hl=en#install_the_firebase_cli) if you don't already have them.
+5. Run `flutter pub get` to get the dependencies.
+6. Finally, run the app:
 ```
 flutter run
 ```
