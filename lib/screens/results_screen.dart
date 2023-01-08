@@ -43,7 +43,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
         FirebaseFirestore.instance.collection('reported');
 
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.cyan[100],
       appBar: AppBar(
         title: const Text('Vehicle Info'),
         centerTitle: true,
@@ -370,7 +370,7 @@ class Card1 extends StatelessWidget {
               child: ExpandablePanel(
                 controller: controllerList[0],
                 theme: const ExpandableThemeData(
-                  iconColor: Colors.blue,
+                  iconColor: Color(0xff00838F),
                   headerAlignment: ExpandablePanelHeaderAlignment.center,
                   tapBodyToCollapse: true,
                 ),
@@ -393,7 +393,7 @@ class Card1 extends StatelessWidget {
                             child: Text(
                           'Description',
                           style: TextStyle(
-                              color: Colors.blue,
+                              color: Color(0xff00838F),
                               fontWeight: FontWeight.w700,
                               fontSize: 16),
                         ))),
@@ -458,7 +458,7 @@ class Card2 extends StatelessWidget {
               child: ExpandablePanel(
                 controller: controllerList[1],
                 theme: const ExpandableThemeData(
-                  iconColor: Colors.blue,
+                  iconColor: Color(0xff00838F),
                   headerAlignment: ExpandablePanelHeaderAlignment.center,
                   tapBodyToCollapse: true,
                 ),
@@ -481,7 +481,7 @@ class Card2 extends StatelessWidget {
                             child: Text(
                           'Vehicle Details',
                           style: TextStyle(
-                              color: Colors.blue,
+                              color: Color(0xff00838F),
                               fontWeight: FontWeight.w700,
                               fontSize: 16),
                         ))),
@@ -502,7 +502,7 @@ class Card2 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: vinNumber,
                               style: const TextStyle(
@@ -520,7 +520,7 @@ class Card2 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: engineNumber,
                               style: const TextStyle(
@@ -538,7 +538,7 @@ class Card2 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: stolenDate,
                               style: const TextStyle(
@@ -556,7 +556,7 @@ class Card2 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: regNumber,
                               style: const TextStyle(
@@ -613,7 +613,7 @@ class Card3 extends StatelessWidget {
               child: ExpandablePanel(
                 controller: controllerList[2],
                 theme: const ExpandableThemeData(
-                  iconColor: Colors.blue,
+                  iconColor: Color(0xff00838F),
                   headerAlignment: ExpandablePanelHeaderAlignment.center,
                   tapBodyToCollapse: true,
                 ),
@@ -636,7 +636,7 @@ class Card3 extends StatelessWidget {
                             child: Text(
                           'Official Information',
                           style: TextStyle(
-                              color: Colors.blue,
+                              color: Color(0xff00838F),
                               fontWeight: FontWeight.w700,
                               fontSize: 16),
                         ))),
@@ -658,7 +658,7 @@ class Card3 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: province,
                               style: const TextStyle(
@@ -676,7 +676,7 @@ class Card3 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: lastKnownLocation,
                               style: const TextStyle(
@@ -694,7 +694,7 @@ class Card3 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: caseNumber,
                               style: const TextStyle(
@@ -712,7 +712,7 @@ class Card3 extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue)),
+                                  color: Color(0xff00838F))),
                           TextSpan(
                               text: policeStation,
                               style: const TextStyle(

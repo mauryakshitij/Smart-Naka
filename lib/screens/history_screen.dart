@@ -29,19 +29,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 8),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (BuildContext context, index) {
                 Map<String, dynamic> data =
                     snapshot.data!.docs[index].data() as Map<String, dynamic>;
                 return Card(
-                  color: Colors.blue,
+                  color: Colors.cyan[800],
                   elevation: 5,
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: const Color(0xff6ae792),
+                      backgroundColor: const Color(0xff003B8F),
                       child: Text(
                         (index + 1).toString(),
-                        style: const TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                     title: Text(data['regNumber']),

@@ -25,6 +25,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.cyan[100],
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
@@ -62,7 +63,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   tabBackgroundGradient: LinearGradient(
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
-                    colors: [Colors.lightBlue[100]!, Colors.cyan],
+                    colors: [Colors.cyan[800]!, Colors.cyan],
                   ),
                   gap: 8,
                   tabBorderRadius: 15,

@@ -23,6 +23,7 @@ class _AccountInfoState extends State<AccountInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         leading: IconButton(
             onPressed: (){
@@ -48,6 +49,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     WidgetCircularAnimator(
+                      innerColor: const Color(0xff003B8F),
+                      outerColor: const Color(0xff003B8F),
                       child: Container(
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
@@ -55,7 +58,7 @@ class _AccountInfoState extends State<AccountInfo> {
                         child: const Icon(
                           Icons.account_circle_sharp,
                           size: 150,
-                          color: Colors.blue,
+                          color: Color(0xff00838F),
                           // shadows: <Shadow>[
                           //   Shadow(color: Colors.grey, blurRadius: 30.0)
                           // ],
