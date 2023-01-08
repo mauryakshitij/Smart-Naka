@@ -67,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             fontWeight: FontWeight.w500,
                             color: isDarkMode
                                 ? Colors.white
-                                : const Color(0xFF213B7E)),
+                                : const Color(0xFF00838F)),
                       ),
                       Text(
                         "Naka",

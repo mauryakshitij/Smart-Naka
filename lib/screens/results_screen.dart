@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smart_naka/Controllers/vehicle_data.dart';
 import 'package:smart_naka/models/vehicle_model.dart';
+import 'package:smart_naka/screens/location_history.dart';
 
 class ResultsScreen extends StatefulWidget {
   final String regNumber;
@@ -104,6 +105,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
       print(placemarks[1]);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     String? currentEmail = FirebaseAuth.instance.currentUser!.email;
@@ -158,12 +160,23 @@ class _ResultsScreenState extends State<ResultsScreen> {
           ),
           IconButton(
             onPressed: () async{
+              String location = "";
+              Position? currentPosition = await _getCurrentPosition();
+              List<Placemark> placemarks;
+              if(currentPosition==null){
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please give all permission then try again')));
+                location = " ";
+              }
+              else{
+                placemarks= await _getAddressFromLatLng(currentPosition);
+                location = "${placemarks[1].subLocality}, ${placemarks[1].locality}, ${placemarks[1].administrativeArea}, ${placemarks[1].country}, ${placemarks[1].postalCode}";
+              }
               await Share.share(
-                check==1? "${widget.regNumber} is not stolen" : "Hello, I'm a constable and I've encountered a suspicious vehicle that I believe may be stolen. The vehicle is a ${vehicleInfo.right.make} ${vehicleInfo.right.model} with a ${vehicleInfo.right.color} exterior and ${vehicleInfo.right.regNumber}. It was last seen in the area of [location]. If you have any information about this vehicle or its whereabouts, please contact me at $currentEmail as soon as possible. Thank you for your assistance.",
+                check==1? "${widget.regNumber} is not stolen" : "Hello, I'm a constable and I've encountered a suspicious vehicle that I believe may be stolen. The vehicle is a ${vehicleInfo.right.make} ${vehicleInfo.right.model} with a ${vehicleInfo.right.color} exterior and ${vehicleInfo.right.regNumber}. It was last seen in the area of $location. If you have any information about this vehicle or its whereabouts, please contact me at $currentEmail as soon as possible. Thank you for your assistance.",
                 subject: 'this is the subject'
               );
             }, 
-            icon: Icon(Icons.share_rounded),
+            icon: const Icon(Icons.share_rounded),
           )
         ],
       ),
@@ -278,7 +291,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
           history
               .doc(snapshot.data!.right.regNumber)
               .set(snapshot.data!.right.toJsonWithTime())
-              .then((value) => print("history Added"))
               .catchError((error) => print("Failed to add history"));
           currentVehicle = snapshot.data!.right;
           stolen = snapshot.data!.left;
@@ -354,7 +366,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         const Text(
-                          'Found this vehicle?',
+                          'Seen this vehicle?',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
@@ -373,7 +385,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                               "The vehicle is reported to be found.")));
                                 }).catchError((error) => print("Failed to report"));
                               },
-                              child: const Text('Report'),
+                              child: const Text('Report Found'),
                             ),
                             ElevatedButton(
                               onPressed: () {
@@ -386,6 +398,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       ],
                     ),
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => LocationHistory(regNumber: widget.regNumber)));
+                  },
+                  child: const Text('Show Location History'),
                 ),
                 ExpandableTheme(
                   data: const ExpandableThemeData(
