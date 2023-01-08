@@ -18,6 +18,8 @@ class _StarredScreenState extends State<StarredScreen> {
         .collection('users')
         .doc(currentEmail)
         .collection('starred');
+    CollectionReference reported =
+        FirebaseFirestore.instance.collection('reported');
     return StreamBuilder(
         stream: starred.orderBy('searchTime', descending: true).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -28,11 +30,23 @@ class _StarredScreenState extends State<StarredScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+          List<Map<String, dynamic>> list = [];
+          for (var i = 0; i < snapshot.data!.docs.length; i++) {
+            Map<String, dynamic> data =
+                snapshot.data!.docs[i].data() as Map<String, dynamic>;
+            reported
+                .doc(data['regNumber'])
+                .get()
+                .then((DocumentSnapshot documentSnapshot) {
+              if (!documentSnapshot.exists) {
+                list.add(data);
+              }
+            });
+          }
           return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
+              itemCount: list.length,
               itemBuilder: (BuildContext context, index) {
-                Map<String, dynamic> data =
-                snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                Map<String, dynamic> data = list[index];
                 return Card(
                   color: Colors.blue,
                   elevation: 5,
