@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:widget_circular_animator/widget_circular_animator.dart';
 
 import 'login_screen.dart';
 
@@ -46,13 +47,20 @@ class _AccountInfoState extends State<AccountInfo> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.account_circle_sharp,
-                      size: 200,
-                      color: Colors.blue,
-                      shadows: <Shadow>[
-                        Shadow(color: Colors.grey, blurRadius: 30.0)
-                      ],
+                    WidgetCircularAnimator(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.account_circle_sharp,
+                          size: 150,
+                          color: Colors.blue,
+                          // shadows: <Shadow>[
+                          //   Shadow(color: Colors.grey, blurRadius: 30.0)
+                          // ],
+                        ),
+                      ),
                     ),
                     const Divider(
                       color: Color.fromARGB(255, 192, 191, 191),

@@ -20,6 +20,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   bool stolen = false;
   bool isStarred = false;
   late Vehicle currentVehicle;
+  late ReturnPair vehicleInfo;
 
   @override
   void setState(fn) {
@@ -81,9 +82,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
           ),
           IconButton(
             onPressed: () async{
-
               await Share.share(
-                check==1? "${widget.regNumber} is not stolen" : "${widget.regNumber} is stolen", 
+                check==1? "${widget.regNumber} is not stolen" : "Hello, I'm a constable and I've encountered a suspicious vehicle that I believe may be stolen. The vehicle is a ${vehicleInfo.right.make} ${vehicleInfo.right.model} with a ${vehicleInfo.right.color} exterior and ${vehicleInfo.right.regNumber}. It was last seen in the area of [location]. If you have any information about this vehicle or its whereabouts, please contact me at $currentEmail as soon as possible. Thank you for your assistance.",
                 subject: 'this is the subject'
               );
             }, 
@@ -216,7 +216,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
               });
             }
           });
-
+          for(var i=0; i<controllerList.length; i++){
+            controllerList[i].expanded=true;
+          }
+          vehicleInfo = snapshot.data!;
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
