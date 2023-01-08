@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable/expandable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:smart_naka/Controllers/vehicle_data.dart';
 import 'package:smart_naka/models/vehicle_model.dart';
 
@@ -15,10 +16,17 @@ class ResultsScreen extends StatefulWidget {
 }
 
 class _ResultsScreenState extends State<ResultsScreen> {
+  int check=0;
   bool stolen = false;
   bool isStarred = false;
   late Vehicle currentVehicle;
 
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     String? currentEmail = FirebaseAuth.instance.currentUser!.email;
@@ -71,6 +79,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ? const Icon(Icons.star)
                 : const Icon(Icons.star_border),
           ),
+          IconButton(
+            onPressed: () async{
+
+              await Share.share(
+                check==1? "${widget.regNumber} is not stolen" : "${widget.regNumber} is stolen", 
+                subject: 'this is the subject'
+              );
+            }, 
+            icon: Icon(Icons.share_rounded),
+          )
         ],
       ),
       body: FutureBuilder(
@@ -111,6 +129,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.data!.left == false) {
+            check=1;
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
