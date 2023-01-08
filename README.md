@@ -5,7 +5,7 @@
 <a  href="https://firebase.google.com/"  target="_blank"><img  height="39"  src="https://user-images.githubusercontent.com/37345795/205487145-a7ad5e40-71e1-46d5-a828-ef82ee168885.png"  alt="Appwrite Logo"></a>
 </p>
 
-A new Flutter project.
+We have created  a mobile app that allows a constable to quickly and easily check the details of a suspicious vehicle in real time using the dataset present in https://stolenvehicles.co.za/. This database contains information about stolen vehicles, and the goal of the mobile app is to allow the constable to access this information while on patrol, so that they can take appropriate action if a suspicious vehicle is found. To do this, the mobile app communicates with the dataset  through an API (Application Programming Interface) in order to retrieve the necessary information.
 
 ## Setting up the project in your local environment💻
 
