@@ -25,8 +25,8 @@ samples, guidance on mobile development, and a full API reference.
 1. [Fork](https://github.com/mauryakshitij/Smart-Naka/fork) this repository.
 2. Clone the **forked** repository:
 ```
-git clone https://github.com/<your username>/Tagify
-cd Tagify
+git clone https://github.com/<your username>/Smart-Naka
+cd Smart-Naka
 ```
 3. Add a remote to the upstream repository:
 ```
